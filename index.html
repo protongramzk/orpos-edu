@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+  <div id="quiz-container"></div>
+
+  <script src="quiz.js"></script>
+  <script>
+    new ORPOSQuiz({
+      target: "#quiz-container",
+      data: [
+        {q: "Ibu kota Indonesia?", a: ["Jakarta", "Bandung", "Surabaya"], correct: "Jakarta"},
+        {q: "2 + 2 = ?", a: ["3", "4", "5"], correct: "4"},
+        {q: "Warna langit?", a: ["Hijau", "Biru", "Merah"], correct: "Biru"}
+      ],
+      onWin: (score) => console.log("Menang dengan skor:", score),
+      onLose: (score) => console.log("Kalah dengan skor:", score),
+      timePerQ: 5000 // 5 detik per soal, bisa dihapus kalau nggak mau auto-next
+    });
+  </script>
+</body>
+</html>

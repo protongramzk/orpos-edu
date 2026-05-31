@@ -138,7 +138,7 @@
             selected === item
         ){
 
-            return "correct";
+            return "bg-accent text-accent-content animate-success";
 
         }
 
@@ -146,21 +146,21 @@
             wrongItem === item
         ){
 
-            return "wrong";
+            return "bg-danger-dark animate-shake";
 
         }
 
-        return "";
+        return "bg-card";
     }
 
 </script>
 
-<div class="root">
+<div class="root min-h-screen bg-dark text-white p-4 flex flex-col gap-4">
 
-    <div class="topbar">
+    <div class="topbar flex items-center gap-3">
 
         <button
-            class="back"
+            class="back w-13 h-13 border-none bg-accent text-accent-content text-xl cursor-pointer"
             onclick={onExit}
         >
 
@@ -168,13 +168,13 @@
 
         </button>
 
-        <div class="title">
+        <div class="title flex-1 text-2xl font-bold text-accent">
 
             {judul}
 
         </div>
 
-        <div class="score">
+        <div class="score font-bold text-accent">
 
             {Math.round(score)}
 
@@ -182,10 +182,10 @@
 
     </div>
 
-    <div class="progress-wrap">
+    <div class="progress-wrap progress-bar">
 
         <div
-            class="progress"
+            class="progress progress-fill"
             style:width={`${progress}%`}
         ></div>
 
@@ -193,7 +193,7 @@
 
     {#if round}
 
-        <div class="question">
+        <div class="question text-xl font-bold">
 
             Pilih item yang
             tidak termasuk
@@ -201,7 +201,7 @@
 
         </div>
 
-        <div class="list">
+        <div class="list flex flex-col gap-3">
 
             {#each options as item}
 
@@ -209,6 +209,17 @@
 
                     class="
                         item
+                        border-none
+                        text-white
+                        p-5
+                        flex
+                        items-center
+                        gap-14
+                        text-left
+                        cursor-pointer
+                        transition-transform
+                        hover-bg-hover-alt
+                        hover-translate-x-2
                         {itemClass(item)}
                     "
 
@@ -218,9 +229,9 @@
 
                 >
 
-                    <span
-                        class="bullet"
-                    ></span>
+                    <div
+                        class="bullet {selected === item ? 'bg-accent-content' : 'bg-accent'}"
+                    ></div>
 
                     <span>
 
@@ -237,251 +248,3 @@
     {/if}
 
 </div>
-
-<style>
-
-.root{
-
-    min-height:100vh;
-
-    background:#111;
-
-    color:white;
-
-    padding:16px;
-
-    box-sizing:border-box;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:16px;
-
-}
-
-.topbar{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-.back{
-
-    width:50px;
-
-    height:50px;
-
-    border:none;
-
-    background:var(--accent);
-
-    color:var(--accent-text);
-
-    font-size:22px;
-
-    cursor:pointer;
-
-}
-
-.title{
-
-    flex:1;
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    color:var(--accent);
-
-}
-
-.score{
-
-    font-weight:bold;
-
-    color:var(--accent);
-
-}
-
-.progress-wrap{
-
-    height:10px;
-
-    background:#222;
-
-}
-
-.progress{
-
-    height:100%;
-
-    background:var(--accent);
-
-    transition:0.25s;
-
-}
-
-.question{
-
-    font-size:22px;
-
-    font-weight:bold;
-
-    line-height:1.5;
-
-}
-
-.list{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:12px;
-
-}
-
-.item{
-
-    border:none;
-
-    background:#1b1b1b;
-
-    color:white;
-
-    padding:18px;
-
-    display:flex;
-
-    align-items:center;
-
-    gap:14px;
-
-    text-align:left;
-
-    cursor:pointer;
-
-    transition:
-        transform .15s,
-        background .15s;
-
-}
-
-.item:hover{
-
-    background:#262626;
-
-    transform:
-        translateX(6px);
-
-}
-
-.bullet{
-
-    width:12px;
-
-    height:12px;
-
-    background:var(--accent);
-
-    flex-shrink:0;
-
-}
-
-.correct{
-
-    background:
-        var(--accent) !important;
-
-    color:
-        var(--accent-text);
-
-    animation:
-        success .4s ease;
-
-}
-
-.correct .bullet{
-
-    background:
-        var(--accent-text);
-
-}
-
-.wrong{
-
-    animation:
-        shake .35s;
-
-    background:
-        #5b2222;
-
-}
-
-@keyframes shake{
-
-    0%{
-
-        transform:
-            translateX(0);
-
-    }
-
-    25%{
-
-        transform:
-            translateX(-8px);
-
-    }
-
-    50%{
-
-        transform:
-            translateX(8px);
-
-    }
-
-    75%{
-
-        transform:
-            translateX(-6px);
-
-    }
-
-    100%{
-
-        transform:
-            translateX(0);
-
-    }
-
-}
-
-@keyframes success{
-
-    from{
-
-        opacity:.6;
-
-        transform:
-            translateX(-12px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:
-            translateX(0);
-
-    }
-
-}
-
-</style>

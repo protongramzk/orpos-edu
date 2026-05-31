@@ -156,27 +156,27 @@
 
 </script>
 
-<div class="home">
+<div class="home min-h-screen p-5 bg-dark text-white flex flex-col">
 
-    <div class="hero">
+    <div class="hero text-center mb-7">
 
-        <div class="logo">
+        <div class="logo w-20 h-20 m-auto mb-3 bg-accent text-accent-content flex items-center justify-center">
 
             <span
-                class="material-icons"
+                class="material-icons icon-lg"
             >
                 school
             </span>
 
         </div>
 
-        <div class="title">
+        <div class="title text-5xl font-extrabold text-accent">
 
             Orpos Edu
 
         </div>
 
-        <div class="subtitle">
+        <div class="subtitle mt-1 text-muted text-sm">
 
             Version 0.1.0 Beta
 
@@ -184,25 +184,25 @@
 
     </div>
 
-    <div class="grid">
+    <div class="grid grid-cols-2 gap-14 flex-1">
 
         {#each menus as menu}
 
             <button
-                class="card"
+                class="card border-none bg-card text-white aspect-square flex flex-col justify-center items-center gap-3 cursor-pointer border-t-5 transition-transform hover-bg-hover hover-translate-y-neg-1 active-scale-97"
                 onclick={() =>
                     openGame(menu.id)
                 }
             >
 
                 <span
-                    class="material-icons icon"
+                    class="material-icons icon text-accent icon-xl"
                 >
                     {menu.icon}
                 </span>
 
                 <span
-                    class="label"
+                    class="label text-base font-bold text-center"
                 >
                     {menu.title}
                 </span>
@@ -213,10 +213,10 @@
 
     </div>
 
-    <div class="bottom">
+    <div class="bottom mt-5 grid grid-cols-2 gap-12">
 
         <button
-            class="btn"
+            class="btn border-none bg-accent text-accent-content p-4 flex items-center justify-center gap-10 font-bold cursor-pointer transition-all hover-brightness active-scale-97"
             onclick={
                 openColorPicker
             }
@@ -233,7 +233,7 @@
         </button>
 
         <button
-            class="btn"
+            class="btn border-none bg-accent text-accent-content p-4 flex items-center justify-center gap-10 font-bold cursor-pointer transition-all hover-brightness active-scale-97"
             onclick={
                 openSocial
             }
@@ -259,230 +259,3 @@
     />
 
 </div>
-
-<style>
-
-:global(:root){
-
-    --accent:#00a8ff;
-
-    --accent-text:#fff;
-
-}
-
-:global(body){
-
-    margin:0;
-
-    background:#111;
-
-}
-
-.home{
-
-    min-height:100vh;
-
-    padding:20px;
-
-    box-sizing:border-box;
-
-    background:#111;
-
-    color:white;
-
-    font-family:sans-serif;
-
-    display:flex;
-
-    flex-direction:column;
-
-}
-
-.hero{
-
-    text-align:center;
-
-    margin-bottom:28px;
-
-}
-
-.logo{
-
-    width:80px;
-
-    height:80px;
-
-    margin:auto;
-
-    margin-bottom:12px;
-
-    background:var(--accent);
-
-    color:var(--accent-text);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-}
-
-.logo .material-icons{
-
-    font-size:42px;
-
-}
-
-.title{
-
-    font-size:38px;
-
-    font-weight:800;
-
-    color:var(--accent);
-
-}
-
-.subtitle{
-
-    margin-top:6px;
-
-    color:#888;
-
-    font-size:14px;
-
-}
-
-.grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:14px;
-
-    flex:1;
-
-}
-
-.card{
-
-    border:none;
-
-    background:#1b1b1b;
-
-    color:white;
-
-    aspect-ratio:1;
-
-    display:flex;
-
-    flex-direction:column;
-
-    justify-content:center;
-
-    align-items:center;
-
-    gap:12px;
-
-    cursor:pointer;
-
-    border-top:5px solid
-    var(--accent);
-
-    transition:
-        .15s transform,
-        .15s background;
-
-}
-
-.card:hover{
-
-    background:#252525;
-
-    transform:
-        translateY(-4px);
-
-}
-
-.card:active{
-
-    transform:
-        scale(.97);
-
-}
-
-.icon{
-
-    color:var(--accent);
-
-    font-size:48px;
-
-}
-
-.label{
-
-    font-size:15px;
-
-    font-weight:bold;
-
-    text-align:center;
-
-}
-
-.bottom{
-
-    margin-top:20px;
-
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:12px;
-
-}
-
-.btn{
-
-    border:none;
-
-    background:var(--accent);
-
-    color:var(--accent-text);
-
-    padding:16px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:10px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:
-        .15s transform,
-        .15s filter;
-
-}
-
-.btn:hover{
-
-    filter:brightness(1.08);
-
-}
-
-.btn:active{
-
-    transform:scale(.97);
-
-}
-
-</style>

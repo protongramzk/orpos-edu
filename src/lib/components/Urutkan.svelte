@@ -1,4 +1,3 @@
-
 <script>
 
     let {
@@ -144,12 +143,12 @@
 
 </script>
 
-<div class="root">
+<div class="root min-h-screen bg-dark text-white p-4">
 
-    <div class="topbar">
+    <div class="topbar flex gap-3 items-center mb-5">
 
         <button
-            class="icon-btn"
+            class="icon-btn w-13 h-13 border-none rounded-lg bg-accent text-accent-content flex items-center justify-center transition-all active-scale-92 cursor-pointer"
             onclick={onExit}
         >
             <span
@@ -159,7 +158,7 @@
             </span>
         </button>
 
-        <div class="title">
+        <div class="title text-3xl font-bold text-accent">
 
             {judul}
 
@@ -169,21 +168,18 @@
 
     {#if round}
 
-        <div class="clue">
+        <div class="clue bg-card p-4 rounded-lg mb-5 border-l-5">
 
             {round.clue}
 
         </div>
 
-        <div class="list">
+        <div class="list flex flex-col gap-3">
 
             {#each list as item, i}
 
                 <div
-                    class:dragging={
-                        dragIndex === i
-                    }
-                    class="card"
+                    class="card flex items-center gap-3 bg-card-alt p-4 rounded-xl cursor-grab transition-all hover-translate-y-neg-px-2 active-scale-97 {dragIndex === i ? 'opacity-50 active-scale-97 cursor-grabbing' : ''}"
                     draggable="true"
                     ondragstart={() =>
                         dragStart(i)
@@ -195,7 +191,7 @@
                 >
 
                     <div
-                        class="drag-icon"
+                        class="drag-icon text-accent flex items-center"
                     >
 
                         <span
@@ -207,7 +203,7 @@
                     </div>
 
                     <div
-                        class="text"
+                        class="text flex-1 text-base"
                     >
 
                         {item}
@@ -221,7 +217,7 @@
         </div>
 
         <button
-            class="check"
+            class="check w-full mt-5 p-4 border-none rounded-xl bg-accent text-accent-content font-bold flex items-center justify-center gap-2 transition-all active-scale-98 cursor-pointer"
             onclick={check}
         >
 
@@ -238,181 +234,3 @@
     {/if}
 
 </div>
-
-<style>
-
-.root{
-
-    min-height:100vh;
-    background:#111;
-    color:white;
-    padding:16px;
-    box-sizing:border-box;
-
-}
-
-.topbar{
-
-    display:flex;
-    gap:12px;
-    align-items:center;
-    margin-bottom:20px;
-
-}
-
-.icon-btn{
-
-    width:52px;
-    height:52px;
-    border:none;
-    border-radius:16px;
-    background:var(--accent);
-    color:var(--accent-text);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    transition:.2s;
-
-}
-
-.icon-btn:active{
-
-    transform:scale(.92);
-
-}
-
-.title{
-
-    font-size:28px;
-    font-weight:bold;
-    color:var(--accent);
-
-}
-
-.clue{
-
-    background:#1b1b1b;
-    padding:16px;
-    border-radius:16px;
-    margin-bottom:18px;
-    border-left:5px solid
-    var(--accent);
-
-}
-
-.list{
-
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-
-}
-
-.card{
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    background:#1c1c1c;
-
-    padding:16px;
-
-    border-radius:18px;
-
-    cursor:grab;
-
-    transition:
-        transform .25s,
-        opacity .25s,
-        box-shadow .25s;
-
-}
-
-.card:hover{
-
-    transform:
-        translateY(-2px);
-
-}
-
-.card:active{
-
-    cursor:grabbing;
-
-}
-
-.dragging{
-
-    opacity:.5;
-
-    transform:
-        scale(.97);
-
-}
-
-.drag-icon{
-
-    color:var(--accent);
-
-    display:flex;
-
-    align-items:center;
-
-}
-
-.text{
-
-    flex:1;
-
-    font-size:16px;
-
-}
-
-.check{
-
-    width:100%;
-
-    margin-top:18px;
-
-    padding:16px;
-
-    border:none;
-
-    border-radius:18px;
-
-    background:
-    var(--accent);
-
-    color:
-    var(--accent-text);
-
-    font-weight:bold;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:8px;
-
-    transition:.2s;
-
-}
-
-.check:active{
-
-    transform:scale(.98);
-
-}
-
-.material-symbols-rounded{
-
-    font-size:24px;
-
-}
-
-</style>

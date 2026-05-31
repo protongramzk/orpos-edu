@@ -487,18 +487,18 @@
 
 </script>
 
-<div class="root">
+<div class="root w-full min-h-screen bg-dark text-white">
 
-    <div class="topbar">
+    <div class="topbar flex items-center gap-3 p-4">
 
         <button
-            class="back"
+            class="back w-12 h-12 border-none bg-accent text-accent-content cursor-pointer"
             onclick={onExit}
         >
             ←
         </button>
 
-        <div class="title">
+        <div class="title text-3xl font-bold text-accent">
             {judul}
         </div>
 
@@ -506,70 +506,7 @@
 
     <canvas
         bind:this={canvas}
+        class="block w-full touch-none"
     ></canvas>
 
 </div>
-
-<style>
-
-.root{
-
-    width:100%;
-
-    min-height:100vh;
-
-    background:#111;
-
-    color:white;
-
-}
-
-.topbar{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    padding:16px;
-
-}
-
-.back{
-
-    width:48px;
-
-    height:48px;
-
-    border:none;
-
-    background:var(--accent);
-
-    color:var(--accent-text);
-
-    cursor:pointer;
-
-}
-
-.title{
-
-    font-size:26px;
-
-    font-weight:bold;
-
-    color:var(--accent);
-
-}
-
-canvas{
-
-    display:block;
-
-    width:100%;
-
-    touch-action:none;
-
-}
-
-</style>

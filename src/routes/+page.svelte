@@ -134,7 +134,7 @@
 
     {:else}
 
-        <div class="error">
+        <div class="error min-h-screen flex justify-center items-center text-danger bg-dark">
 
             ENGINE / LEVEL TIDAK VALID
 
@@ -143,23 +143,3 @@
     {/if}
 
 {/if}
-
-<style>
-
-.error{
-
-    min-height:100vh;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    color:red;
-
-    background:#111;
-
-}
-
-</style>

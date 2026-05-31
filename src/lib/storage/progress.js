@@ -126,6 +126,6 @@ export function completeLevel({
     }
 
     saveProgress(db);
-
+    window.location.reload()
     return db;
 }

@@ -1,3 +1,4 @@
+
 <script>
 
     let {
@@ -16,6 +17,9 @@
     let score =
         $state(0);
 
+    let dragIndex =
+        $state(null);
+
     let round =
         $derived(
             rounds[current]
@@ -23,8 +27,6 @@
 
     let list =
         $state([]);
-
-    // =====================
 
     function shuffle(arr){
 
@@ -35,8 +37,6 @@
         );
 
     }
-
-    // =====================
 
     $effect(() => {
 
@@ -54,31 +54,47 @@
     });
 
     // =====================
+    // DRAG DROP
+    // =====================
 
-    function moveUp(i){
+    function dragStart(i){
 
-        if(i === 0)
-            return;
+        dragIndex = i;
 
-        [list[i-1],list[i]]
-        =
-        [list[i],list[i-1]];
-
-        list = [...list];
     }
 
-    function moveDown(i){
+    function dragOver(e){
+
+        e.preventDefault();
+
+    }
+
+    function drop(i){
 
         if(
-            i === list.length-1
-        )
-            return;
+            dragIndex === null ||
+            dragIndex === i
+        ) return;
 
-        [list[i+1],list[i]]
-        =
-        [list[i],list[i+1]];
+        let copy =
+            [...list];
 
-        list = [...list];
+        let item =
+            copy.splice(
+                dragIndex,
+                1
+            )[0];
+
+        copy.splice(
+            i,
+            0,
+            item
+        );
+
+        list = copy;
+
+        dragIndex = null;
+
     }
 
     // =====================
@@ -123,6 +139,7 @@
             );
 
         }
+
     }
 
 </script>
@@ -132,10 +149,14 @@
     <div class="topbar">
 
         <button
-            class="back"
+            class="icon-btn"
             onclick={onExit}
         >
-            ←
+            <span
+                class="material-symbols-rounded"
+            >
+                arrow_back
+            </span>
         </button>
 
         <div class="title">
@@ -158,33 +179,38 @@
 
             {#each list as item, i}
 
-                <div class="card">
+                <div
+                    class:dragging={
+                        dragIndex === i
+                    }
+                    class="card"
+                    draggable="true"
+                    ondragstart={() =>
+                        dragStart(i)
+                    }
+                    ondragover={dragOver}
+                    ondrop={() =>
+                        drop(i)
+                    }
+                >
+
+                    <div
+                        class="drag-icon"
+                    >
+
+                        <span
+                            class="material-symbols-rounded"
+                        >
+                            drag_indicator
+                        </span>
+
+                    </div>
 
                     <div
                         class="text"
                     >
 
                         {item}
-
-                    </div>
-
-                    <div
-                        class="actions"
-                    >
-
-                        <button
-                            onclick={() =>
-                            moveUp(i)}
-                        >
-                            ▲
-                        </button>
-
-                        <button
-                            onclick={() =>
-                            moveDown(i)}
-                        >
-                            ▼
-                        </button>
 
                     </div>
 
@@ -199,6 +225,12 @@
             onclick={check}
         >
 
+            <span
+                class="material-symbols-rounded"
+            >
+                task_alt
+            </span>
+
             CEK URUTAN
 
         </button>
@@ -212,115 +244,144 @@
 .root{
 
     min-height:100vh;
-
     background:#111;
-
     color:white;
-
     padding:16px;
-
     box-sizing:border-box;
+
 }
 
 .topbar{
 
     display:flex;
-
     gap:12px;
-
     align-items:center;
-
     margin-bottom:20px;
+
 }
 
-.back{
+.icon-btn{
 
-    width:50px;
-
-    height:50px;
-
+    width:52px;
+    height:52px;
     border:none;
-
+    border-radius:16px;
     background:var(--accent);
-
     color:var(--accent-text);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    transition:.2s;
+
+}
+
+.icon-btn:active{
+
+    transform:scale(.92);
+
 }
 
 .title{
 
     font-size:28px;
-
     font-weight:bold;
-
     color:var(--accent);
+
 }
 
 .clue{
 
     background:#1b1b1b;
-
     padding:16px;
-
-    margin-bottom:16px;
-
+    border-radius:16px;
+    margin-bottom:18px;
     border-left:5px solid
     var(--accent);
+
 }
 
 .list{
 
     display:flex;
-
     flex-direction:column;
+    gap:12px;
 
-    gap:10px;
 }
 
 .card{
 
     display:flex;
-
-    justify-content:
-    space-between;
-
     align-items:center;
+    gap:12px;
 
     background:#1c1c1c;
 
-    padding:14px;
+    padding:16px;
+
+    border-radius:18px;
+
+    cursor:grab;
+
+    transition:
+        transform .25s,
+        opacity .25s,
+        box-shadow .25s;
+
 }
 
-.actions{
+.card:hover{
+
+    transform:
+        translateY(-2px);
+
+}
+
+.card:active{
+
+    cursor:grabbing;
+
+}
+
+.dragging{
+
+    opacity:.5;
+
+    transform:
+        scale(.97);
+
+}
+
+.drag-icon{
+
+    color:var(--accent);
 
     display:flex;
 
-    gap:6px;
+    align-items:center;
+
 }
 
-.actions button{
+.text{
 
-    width:40px;
+    flex:1;
 
-    height:40px;
+    font-size:16px;
 
-    border:none;
-
-    background:
-    var(--accent);
-
-    color:
-    var(--accent-text);
 }
 
 .check{
 
     width:100%;
 
-    margin-top:16px;
+    margin-top:18px;
 
     padding:16px;
 
     border:none;
+
+    border-radius:18px;
 
     background:
     var(--accent);
@@ -329,6 +390,29 @@
     var(--accent-text);
 
     font-weight:bold;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    transition:.2s;
+
+}
+
+.check:active{
+
+    transform:scale(.98);
+
+}
+
+.material-symbols-rounded{
+
+    font-size:24px;
+
 }
 
 </style>

@@ -2,108 +2,152 @@
 
     import { goto } from "$app/navigation";
 
-    // =========================
-    // MENU GRID
-    // =========================
-
     const menus = [
 
         {
-            id: "abcd",
-            title: "ABC QUIZ",
-            icon: "quiz"
+            id:"abcd",
+            title:"ABC QUIZ",
+            icon:"quiz"
         },
 
         {
-            id: "susunkata",
-            title: "SUSUN KATA",
-            icon: "drag_indicator"
+            id:"susunkata",
+            title:"SUSUN KATA",
+            icon:"spellcheck"
         },
 
         {
-            id: "tarikkata",
-            title: "TARIK GARIS",
-            icon: "gesture"
+            id:"tarikkata",
+            title:"TARIK GARIS",
+            icon:"gesture"
         },
 
         {
-            id: "benarsalah",
-            title: "BENAR SALAH",
-            icon: "check_circle"
+            id:"benarsalah",
+            title:"BENAR SALAH",
+            icon:"check_circle"
         },
-        { id:"urutkan",
-title:"Urutkan",
-icon:"sort"}
+
+        {
+            id:"urutkan",
+            title:"URUTKAN",
+            icon:"sort"
+        },
+
+        {
+            id:"removeone",
+            title:"HAPUS SATU",
+            icon:"highlight_off"
+        }
 
     ];
 
-    // =========================
-    // NAVIGATION
-    // =========================
-
-    function openGame(id) {
-
-        goto(`/${id}`);
-    }
-
-    // =========================
-    // COLOR PICKER
-    // =========================
-
     let colorInput;
 
-    function openColorPicker() {
-        colorInput.click();
+    function openGame(id){
+
+        goto(`/${id}`);
+
     }
 
-    function setAccent(e) {
+    function openColorPicker(){
 
-        const color = e.target.value;
+        colorInput?.click();
 
-        document.documentElement.style.setProperty(
+    }
+
+    function openSocial(){
+
+        window.open(
+            "https://facebook.com/groups/763653822106492/",
+            "_blank"
+        );
+
+    }
+
+    function setAccent(e){
+
+        const color =
+            e.target.value;
+
+        document.documentElement
+        .style
+        .setProperty(
             "--accent",
             color
         );
 
-        document.documentElement.style.setProperty(
+        document.documentElement
+        .style
+        .setProperty(
             "--accent-text",
             getContrast(color)
         );
 
-        localStorage.setItem("accent", color);
+        localStorage.setItem(
+            "accent",
+            color
+        );
+
     }
 
-    function getContrast(hex) {
+    function getContrast(hex){
 
-        hex = hex.replace("#", "");
+        hex =
+            hex.replace("#","");
 
-        const r = parseInt(hex.slice(0,2), 16);
-        const g = parseInt(hex.slice(2,4), 16);
-        const b = parseInt(hex.slice(4,6), 16);
+        const r =
+            parseInt(
+                hex.slice(0,2),
+                16
+            );
+
+        const g =
+            parseInt(
+                hex.slice(2,4),
+                16
+            );
+
+        const b =
+            parseInt(
+                hex.slice(4,6),
+                16
+            );
 
         const brightness =
-            (r * 299 + g * 587 + b * 114) / 1000;
 
-        return brightness > 140 ? "#111" : "#fff";
+            (r * 299 +
+            g * 587 +
+            b * 114)
+
+            / 1000;
+
+        return brightness > 140
+            ? "#111"
+            : "#fff";
+
     }
-
-    // =========================
-    // LOAD ACCENT
-    // =========================
 
     $effect(() => {
 
         const saved =
-            localStorage.getItem("accent");
+            localStorage.getItem(
+                "accent"
+            );
 
-        if (!saved) return;
+        if(!saved)
+            return;
 
-        document.documentElement.style.setProperty(
+        document.documentElement
+        .style
+        .setProperty(
             "--accent",
             saved
         );
 
-        document.documentElement.style.setProperty(
+        document.documentElement
+        .style
+        .setProperty(
             "--accent-text",
             getContrast(saved)
         );
@@ -114,30 +158,54 @@ icon:"sort"}
 
 <div class="home">
 
-    <!-- TITLE -->
+    <div class="hero">
 
-    <div class="title">
-        GAME LAUNCHER
+        <div class="logo">
+
+            <span
+                class="material-icons"
+            >
+                school
+            </span>
+
+        </div>
+
+        <div class="title">
+
+            Orpos Edu
+
+        </div>
+
+        <div class="subtitle">
+
+            Version 0.1.0 Beta
+
+        </div>
+
     </div>
-
-    <!-- GRID -->
 
     <div class="grid">
 
-        {#each menus as m}
+        {#each menus as menu}
 
             <button
                 class="card"
-                onclick={() => openGame(m.id)}
+                onclick={() =>
+                    openGame(menu.id)
+                }
             >
 
-                <span class="material-icons icon">
-                    {m.icon}
+                <span
+                    class="material-icons icon"
+                >
+                    {menu.icon}
                 </span>
 
-                <div class="label">
-                    {m.title}
-                </div>
+                <span
+                    class="label"
+                >
+                    {menu.title}
+                </span>
 
             </button>
 
@@ -145,32 +213,43 @@ icon:"sort"}
 
     </div>
 
-    <!-- ACTIONS -->
-
     <div class="bottom">
 
         <button
             class="btn"
-            onclick={openColorPicker}
+            onclick={
+                openColorPicker
+            }
         >
-            <span class="material-icons">
+
+            <span
+                class="material-icons"
+            >
                 palette
             </span>
 
-            COLOR
+            TEMA
+
         </button>
 
-        <button class="btn">
-            <span class="material-icons">
+        <button
+            class="btn"
+            onclick={
+                openSocial
+            }
+        >
+
+            <span
+                class="material-icons"
+            >
                 groups
             </span>
 
-            SOCIAL
+            KOMUNITAS
+
         </button>
 
     </div>
-
-    <!-- hidden input -->
 
     <input
         bind:this={colorInput}
@@ -183,138 +262,227 @@ icon:"sort"}
 
 <style>
 
-    :global(:root){
-        --accent:#00a8ff;
-        --accent-text:#fff;
-    }
+:global(:root){
 
-    :global(body){
-        margin:0;
-        background:#111;
-    }
+    --accent:#00a8ff;
 
-    .home{
+    --accent-text:#fff;
 
-        min-height:100vh;
+}
 
-        padding:16px;
+:global(body){
 
-        box-sizing:border-box;
+    margin:0;
 
-        background:#111;
+    background:#111;
 
-        color:white;
+}
 
-        font-family:sans-serif;
+.home{
 
-        display:flex;
+    min-height:100vh;
 
-        flex-direction:column;
-    }
+    padding:20px;
 
-    .title{
+    box-sizing:border-box;
 
-        font-size:34px;
+    background:#111;
 
-        font-weight:bold;
+    color:white;
 
-        color:var(--accent);
+    font-family:sans-serif;
 
-        margin-bottom:24px;
-    }
+    display:flex;
 
-    .grid{
+    flex-direction:column;
 
-        display:grid;
+}
 
-        grid-template-columns:repeat(2,1fr);
+.hero{
 
-        gap:14px;
+    text-align:center;
 
-        margin-bottom:40px;
-    }
+    margin-bottom:28px;
 
-    .card{
+}
 
-        border:none;
+.logo{
 
-        background:#1b1b1b;
+    width:80px;
 
-        color:white;
+    height:80px;
 
-        aspect-ratio:1;
+    margin:auto;
 
-        display:flex;
+    margin-bottom:12px;
 
-        flex-direction:column;
+    background:var(--accent);
 
-        justify-content:center;
+    color:var(--accent-text);
 
-        align-items:center;
+    display:flex;
 
-        gap:12px;
+    align-items:center;
 
-        border-top:5px solid var(--accent);
+    justify-content:center;
 
-        cursor:pointer;
+}
 
-        transition:0.15s;
-    }
+.logo .material-icons{
 
-    .card:hover{
-        background:#2a2a2a;
-    }
+    font-size:42px;
 
-    .icon{
+}
 
-        font-size:48px;
+.title{
 
-        color:var(--accent);
-    }
+    font-size:38px;
 
-    .label{
+    font-weight:800;
 
-        font-weight:bold;
+    color:var(--accent);
 
-        font-size:16px;
+}
 
-        text-align:center;
-    }
+.subtitle{
 
-    .bottom{
+    margin-top:6px;
 
-        display:grid;
+    color:#888;
 
-        grid-template-columns:1fr 1fr;
+    font-size:14px;
 
-        gap:12px;
-    }
+}
 
-    .btn{
+.grid{
 
-        background:var(--accent);
+    display:grid;
 
-        color:var(--accent-text);
+    grid-template-columns:
+        repeat(2,1fr);
 
-        border:none;
+    gap:14px;
 
-        padding:16px;
+    flex:1;
 
-        display:flex;
+}
 
-        justify-content:center;
+.card{
 
-        align-items:center;
+    border:none;
 
-        gap:10px;
+    background:#1b1b1b;
 
-        font-weight:bold;
+    color:white;
 
-        cursor:pointer;
-    }
+    aspect-ratio:1;
 
-    .btn:hover{
-        filter:brightness(1.1);
-    }
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+
+    cursor:pointer;
+
+    border-top:5px solid
+    var(--accent);
+
+    transition:
+        .15s transform,
+        .15s background;
+
+}
+
+.card:hover{
+
+    background:#252525;
+
+    transform:
+        translateY(-4px);
+
+}
+
+.card:active{
+
+    transform:
+        scale(.97);
+
+}
+
+.icon{
+
+    color:var(--accent);
+
+    font-size:48px;
+
+}
+
+.label{
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    text-align:center;
+
+}
+
+.bottom{
+
+    margin-top:20px;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:12px;
+
+}
+
+.btn{
+
+    border:none;
+
+    background:var(--accent);
+
+    color:var(--accent-text);
+
+    padding:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:
+        .15s transform,
+        .15s filter;
+
+}
+
+.btn:hover{
+
+    filter:brightness(1.08);
+
+}
+
+.btn:active{
+
+    transform:scale(.97);
+
+}
 
 </style>

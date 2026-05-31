@@ -9,6 +9,50 @@
 rel="stylesheet"
 href="https://fonts.googleapis.com/icon?family=Material+Icons"
 />
+<link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"
+    />
+<!-- Normalize CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-normalize@2.0.0/modern-normalize.min.css">
+
+<!-- PT Sans dari Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+/* 1. Set PT Sans global */
+:root {
+  --font-sans: "PT Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html, body,* {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* 2. Matikan webkit tap highlight paksa di semua elemen */
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none;
+}
+
+/* 3. Biar input/textarea masih bisa select text */
+input, textarea, [contenteditable="true"] {
+  -webkit-touch-callout: default;
+  user-select: text;
+}
+
+/* 4. Reset box-sizing biar aman */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+</style>
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>

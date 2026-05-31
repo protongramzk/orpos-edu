@@ -1,186 +1,256 @@
 <script>
 
+    import {
+        fly
+    } from "svelte/transition";
+
     let {
         data = [],
         onSelect = () => {}
     } = $props();
 
-    // =====================
-    // STATE
-    // =====================
-
     let currentCategory = $state(null);
 
-    // =====================
-function choose(level){
-
-    if(level.locked)
-        return;
-
-    onSelect(
-        currentCategory,
-        level
-    );
-}
-    function openCategory(cat) {
+    function openCategory(cat){
 
         currentCategory = cat;
+
     }
 
-    function back() {
+    function back(){
 
         currentCategory = null;
+
     }
 
-    function calcProgress(cat) {
+    function choose(level){
+
+        if(level.locked)
+            return;
+
+        onSelect(
+            currentCategory,
+            level
+        );
+
+    }
+
+    function calcProgress(cat){
 
         return (
-            (cat.currentReachedLevel /
-            cat.levels.length) * 100
-        );
+
+            cat.currentReachedLevel
+            /
+            cat.levels.length
+
+        ) * 100;
+
     }
 
 </script>
 
 <div class="level-ui">
 
-    <!-- ================= -->
-    <!-- CATEGORY MODE -->
-    <!-- ================= -->
-
     {#if !currentCategory}
 
-        <div class="header">
+        <div
+            transition:fly={{
+                x:-100,
+                duration:250
+            }}
+        >
 
-            LEVEL SELECT
+            <div class="header">
 
-        </div>
-
-        <div class="category-list">
-
-            {#each data as cat}
-
-                <button
-                    class="category-card"
-                    onclick={() => openCategory(cat)}
+                <span
+                    class="material-icons"
                 >
+                    leaderboard
+                </span>
 
-                    <div class="cat-top">
+                LEVEL SELECT
 
-                        <div class="cat-title">
+            </div>
 
-                            {cat.title}
+            <div class="category-list">
 
-                        </div>
+                {#each data as cat}
 
-                        <div class="cat-counter">
-
-                            {cat.currentReachedLevel}
-                            /
-                            {cat.levels.length}
-
-                        </div>
-
-                    </div>
-
-                    <div class="progress-wrap">
+                    <button
+                        class="category-card"
+                        onclick={() =>
+                            openCategory(cat)
+                        }
+                    >
 
                         <div
-                            class="progress"
-                            style:width={
-                                `${calcProgress(cat)}%`
-                            }
-                        ></div>
+                            class="cat-icon"
+                        >
 
-                    </div>
+                            <span
+                                class="material-icons"
+                            >
+                                folder
+                            </span>
 
-                </button>
+                        </div>
 
-            {/each}
+                        <div
+                            class="cat-content"
+                        >
 
-        </div>
+                            <div
+                                class="cat-top"
+                            >
 
-    {/if}
+                                <div
+                                    class="cat-title"
+                                >
 
-    <!-- ================= -->
-    <!-- LEVEL MODE -->
-    <!-- ================= -->
+                                    {cat.title}
 
-    {#if currentCategory}
+                                </div>
 
-        <div class="topbar">
+                                <div
+                                    class="cat-counter"
+                                >
 
-            <button
-                class="back-btn"
-                onclick={back}
-            >
+                                    {cat.currentReachedLevel}
+                                    /
+                                    {cat.levels.length}
 
-                ←
+                                </div>
 
-            </button>
+                            </div>
 
-            <div class="title">
+                            <div
+                                class="progress-wrap"
+                            >
 
-                {currentCategory.title}
+                                <div
+                                    class="progress"
+                                    style:width={
+                                        `${calcProgress(cat)}%`
+                                    }
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </button>
+
+                {/each}
 
             </div>
 
         </div>
 
-        <div class="level-grid">
+    {/if}
 
-            {#each currentCategory.levels as lvl}
+    {#if currentCategory}
+
+        <div
+            transition:fly={{
+                x:150,
+                duration:250
+            }}
+        >
+
+            <div class="topbar">
 
                 <button
-                    class="
-                        level-card
-                        {lvl.locked
-                            ? 'locked'
-                            : ''}
-                    "
-                    onclick={() => choose(lvl)}
+                    class="back-btn"
+                    onclick={back}
                 >
 
-                    <div class="lvl-id">
-
-                        {lvl.id}
-
-                    </div>
-
-                    {#if lvl.locked}
-
-                        <div class="lock">
-
-                            🔒
-
-                        </div>
-
-                    {:else}
-
-                        <div class="score-label">
-
-                            SKOR
-
-                        </div>
-
-                        <div class="score">
-
-                            {lvl.highscore}
-
-                        </div>
-
-                    {/if}
+                    <span
+                        class="material-icons"
+                    >
+                        arrow_back
+                    </span>
 
                 </button>
 
-            {/each}
+                <div class="title">
+
+                    {currentCategory.title}
+
+                </div>
+
+            </div>
+
+            <div class="level-grid">
+
+                {#each currentCategory.levels as lvl}
+
+                    <button
+
+                        class="
+                            level-card
+                            {lvl.locked
+                            ? 'locked'
+                            : ''}
+                        "
+
+                        onclick={() =>
+                            choose(lvl)
+                        }
+                    >
+
+                        <div
+                            class="lvl-top"
+                        >
+
+                            <div
+                                class="lvl-id"
+                            >
+
+                                {lvl.id}
+
+                            </div>
+
+                            {#if lvl.locked}
+
+                                <span
+                                    class="material-icons lock"
+                                >
+                                    lock
+                                </span>
+
+                            {/if}
+
+                        </div>
+
+                        {#if !lvl.locked}
+
+                            <div
+                                class="score-box"
+                            >
+
+                                <span
+                                    class="material-icons"
+                                >
+                                    military_tech
+                                </span>
+
+                                {lvl.highscore}
+
+                            </div>
+
+                        {/if}
+
+                    </button>
+
+                {/each}
+
+            </div>
 
         </div>
 
     {/if}
 
 </div>
-
 <style>
 
     :global(:root){
@@ -188,11 +258,10 @@ function choose(level){
         --accent:#00a8ff;
 
         --accent-text:#fff;
+
     }
 
     .level-ui{
-
-        width:100%;
 
         min-height:100vh;
 
@@ -205,22 +274,30 @@ function choose(level){
         box-sizing:border-box;
 
         font-family:sans-serif;
+
     }
 
-    /* ===================== */
+    /* ================= */
 
     .header{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:10px;
+
+        color:var(--accent);
 
         font-size:32px;
 
         font-weight:bold;
 
-        color:var(--accent);
+        margin-bottom:20px;
 
-        margin-bottom:18px;
     }
 
-    /* ===================== */
+    /* ================= */
 
     .category-list{
 
@@ -229,6 +306,7 @@ function choose(level){
         flex-direction:column;
 
         gap:14px;
+
     }
 
     .category-card{
@@ -237,28 +315,57 @@ function choose(level){
 
         background:#1c1c1c;
 
-        border-left:6px solid var(--accent);
-
-        padding:18px;
+        border-left:6px solid
+        var(--accent);
 
         color:white;
 
-        text-align:left;
-
-        cursor:pointer;
+        padding:18px;
 
         display:flex;
 
-        flex-direction:column;
+        gap:16px;
 
-        gap:12px;
+        cursor:pointer;
 
-        transition:0.15s;
+        text-align:left;
+
+        transition:
+            .18s transform,
+            .18s background;
+
     }
 
     .category-card:hover{
 
-        background:#282828;
+        transform:
+            translateX(8px);
+
+        background:#262626;
+
+    }
+
+    .category-card:active{
+
+        transform:
+            scale(.98);
+
+    }
+
+    .cat-icon{
+
+        display:flex;
+
+        align-items:center;
+
+        color:var(--accent);
+
+    }
+
+    .cat-content{
+
+        flex:1;
+
     }
 
     .cat-top{
@@ -268,31 +375,35 @@ function choose(level){
         justify-content:space-between;
 
         align-items:center;
+
+        margin-bottom:12px;
+
     }
 
     .cat-title{
 
-        font-size:24px;
+        font-size:22px;
 
         font-weight:bold;
+
     }
 
     .cat-counter{
 
         color:var(--accent);
 
-        font-size:15px;
+        font-size:14px;
+
     }
 
-    /* ===================== */
+    /* ================= */
 
     .progress-wrap{
 
-        width:100%;
+        height:10px;
 
-        height:12px;
+        background:#2a2a2a;
 
-        background:#262626;
     }
 
     .progress{
@@ -301,10 +412,11 @@ function choose(level){
 
         background:var(--accent);
 
-        transition:0.2s;
+        transition:.25s;
+
     }
 
-    /* ===================== */
+    /* ================= */
 
     .topbar{
 
@@ -312,9 +424,10 @@ function choose(level){
 
         align-items:center;
 
-        gap:16px;
+        gap:14px;
 
         margin-bottom:20px;
+
     }
 
     .back-btn{
@@ -329,37 +442,64 @@ function choose(level){
 
         color:var(--accent-text);
 
-        font-size:24px;
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
 
         cursor:pointer;
+
+        transition:.15s;
+
+    }
+
+    .back-btn:hover{
+
+        filter:brightness(1.1);
+
+    }
+
+    .back-btn:active{
+
+        transform:scale(.95);
+
     }
 
     .title{
 
-        font-size:30px;
+        font-size:28px;
 
         font-weight:bold;
 
         color:var(--accent);
+
     }
 
-    /* ===================== */
+    /* ================= */
 
     .level-grid{
 
         display:grid;
 
         grid-template-columns:
-            repeat(auto-fill,minmax(120px,1fr));
+            repeat(
+                auto-fill,
+                minmax(120px,1fr)
+            );
 
         gap:14px;
+
     }
 
     .level-card{
 
         border:none;
 
-        background:#1e1e1e;
+        background:#1c1c1c;
+
+        border-top:5px solid
+        var(--accent);
 
         color:white;
 
@@ -367,22 +507,43 @@ function choose(level){
 
         padding:14px;
 
-        cursor:pointer;
-
-        border-top:5px solid var(--accent);
-
         display:flex;
 
         flex-direction:column;
 
         justify-content:space-between;
 
-        transition:0.15s;
+        cursor:pointer;
+
+        transition:
+            .18s transform,
+            .18s background;
+
     }
 
     .level-card:hover{
 
-        background:#292929;
+        transform:
+            translateY(-4px);
+
+        background:#262626;
+
+    }
+
+    .level-card:active{
+
+        transform:
+            scale(.97);
+
+    }
+
+    .lvl-top{
+
+        display:flex;
+
+        justify-content:
+        space-between;
+
     }
 
     .lvl-id{
@@ -392,36 +553,55 @@ function choose(level){
         font-weight:bold;
 
         color:var(--accent);
+
     }
 
-    .score-label{
+    .score-box{
 
-        font-size:12px;
+        display:flex;
 
-        opacity:0.7;
-    }
+        align-items:center;
 
-    .score{
+        gap:6px;
 
-        font-size:24px;
+        color:var(--accent);
 
         font-weight:bold;
-    }
 
-    /* ===================== */
-
-    .locked{
-
-        opacity:0.45;
-
-        filter:grayscale(1);
-
-        cursor:not-allowed;
     }
 
     .lock{
 
-        font-size:28px;
+        color:#aaa;
+
+    }
+
+    /* ================= */
+
+    .locked{
+
+        opacity:.45;
+
+        filter:grayscale(1);
+
+        cursor:not-allowed;
+
+    }
+
+    .locked:hover{
+
+        transform:none;
+
+        background:#1c1c1c;
+
+    }
+
+    /* ================= */
+
+    .material-icons{
+
+        user-select:none;
+
     }
 
 </style>

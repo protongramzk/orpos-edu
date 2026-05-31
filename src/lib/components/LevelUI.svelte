@@ -6,7 +6,8 @@
 
     let {
         data = [],
-        onSelect = () => {}
+        onSelect = () => {},
+        onBack = () => {}
     } = $props();
 
     let currentCategory = $state(null);
@@ -19,7 +20,11 @@
 
     function back(){
 
-        currentCategory = null;
+        if(currentCategory){
+            currentCategory = null;
+        } else {
+            onBack();
+        }
 
     }
 
@@ -49,7 +54,7 @@
 
 </script>
 
-<div class="level-ui">
+<div class="level-ui min-h-screen bg-dark text-white p-4">
 
     {#if !currentCategory}
 
@@ -60,31 +65,48 @@
             }}
         >
 
-            <div class="header">
+            <div class="topbar flex items-center gap-14 mb-5">
 
-                <span
-                    class="material-icons"
+                <button
+                    class="back-btn w-13 h-13 border-none bg-accent text-accent-content flex items-center justify-center cursor-pointer transition-all hover-brightness active-scale-95"
+                    onclick={back}
                 >
-                    leaderboard
-                </span>
 
-                LEVEL SELECT
+                    <span
+                        class="material-icons"
+                    >
+                        arrow_back
+                    </span>
+
+                </button>
+
+                <div class="header flex items-center gap-10 text-accent text-4xl font-bold">
+
+                    <span
+                        class="material-icons"
+                    >
+                        leaderboard
+                    </span>
+
+                    LEVEL SELECT
+
+                </div>
 
             </div>
 
-            <div class="category-list">
+            <div class="category-list flex flex-col gap-14">
 
                 {#each data as cat}
 
                     <button
-                        class="category-card"
+                        class="category-card border-none bg-card-alt border-l-6 text-white p-5 flex gap-4 cursor-pointer text-left transition-all hover-translate-x-2 hover-bg-hover-alt active-scale-98"
                         onclick={() =>
                             openCategory(cat)
                         }
                     >
 
                         <div
-                            class="cat-icon"
+                            class="cat-icon flex items-center text-accent"
                         >
 
                             <span
@@ -96,15 +118,15 @@
                         </div>
 
                         <div
-                            class="cat-content"
+                            class="cat-content flex-1"
                         >
 
                             <div
-                                class="cat-top"
+                                class="cat-top flex justify-between items-center mb-3"
                             >
 
                                 <div
-                                    class="cat-title"
+                                    class="cat-title text-xl font-bold"
                                 >
 
                                     {cat.title}
@@ -112,7 +134,7 @@
                                 </div>
 
                                 <div
-                                    class="cat-counter"
+                                    class="cat-counter text-accent text-sm"
                                 >
 
                                     {cat.currentReachedLevel}
@@ -124,14 +146,12 @@
                             </div>
 
                             <div
-                                class="progress-wrap"
+                                class="progress-wrap progress-bar bg-progress-wrap"
                             >
 
                                 <div
-                                    class="progress"
-                                    style:width={
-                                        `${calcProgress(cat)}%`
-                                    }
+                                    class="progress progress-fill"
+                                    style:width={`${calcProgress(cat)}%`}
                                 ></div>
 
                             </div>
@@ -157,10 +177,10 @@
             }}
         >
 
-            <div class="topbar">
+            <div class="topbar flex items-center gap-14 mb-5">
 
                 <button
-                    class="back-btn"
+                    class="back-btn w-13 h-13 border-none bg-accent text-accent-content flex items-center justify-center cursor-pointer transition-all hover-brightness active-scale-95"
                     onclick={back}
                 >
 
@@ -172,7 +192,7 @@
 
                 </button>
 
-                <div class="title">
+                <div class="title text-3xl font-bold text-accent">
 
                     {currentCategory.title}
 
@@ -180,7 +200,7 @@
 
             </div>
 
-            <div class="level-grid">
+            <div class="level-grid grid grid-cols-auto-fill gap-14">
 
                 {#each currentCategory.levels as lvl}
 
@@ -188,9 +208,20 @@
 
                         class="
                             level-card
+                            border-none
+                            bg-card-alt
+                            border-t-5
+                            text-white
+                            min-h-120
+                            p-4
+                            flex
+                            flex-col
+                            justify-between
+                            cursor-pointer
+                            transition-all
                             {lvl.locked
-                            ? 'locked'
-                            : ''}
+                            ? 'opacity-45 grayscale cursor-not-allowed'
+                            : 'hover-translate-y-neg-1 hover-bg-hover-alt active-scale-97'}
                         "
 
                         onclick={() =>
@@ -199,11 +230,11 @@
                     >
 
                         <div
-                            class="lvl-top"
+                            class="lvl-top flex justify-between"
                         >
 
                             <div
-                                class="lvl-id"
+                                class="lvl-id text-4xl font-bold text-accent"
                             >
 
                                 {lvl.id}
@@ -213,7 +244,7 @@
                             {#if lvl.locked}
 
                                 <span
-                                    class="material-icons lock"
+                                    class="material-icons lock text-gray"
                                 >
                                     lock
                                 </span>
@@ -225,7 +256,7 @@
                         {#if !lvl.locked}
 
                             <div
-                                class="score-box"
+                                class="score-box flex items-center gap-2 text-accent font-bold"
                             >
 
                                 <span
@@ -251,357 +282,3 @@
     {/if}
 
 </div>
-<style>
-
-    :global(:root){
-
-        --accent:#00a8ff;
-
-        --accent-text:#fff;
-
-    }
-
-    .level-ui{
-
-        min-height:100vh;
-
-        background:#111;
-
-        color:white;
-
-        padding:16px;
-
-        box-sizing:border-box;
-
-        font-family:sans-serif;
-
-    }
-
-    /* ================= */
-
-    .header{
-
-        display:flex;
-
-        align-items:center;
-
-        gap:10px;
-
-        color:var(--accent);
-
-        font-size:32px;
-
-        font-weight:bold;
-
-        margin-bottom:20px;
-
-    }
-
-    /* ================= */
-
-    .category-list{
-
-        display:flex;
-
-        flex-direction:column;
-
-        gap:14px;
-
-    }
-
-    .category-card{
-
-        border:none;
-
-        background:#1c1c1c;
-
-        border-left:6px solid
-        var(--accent);
-
-        color:white;
-
-        padding:18px;
-
-        display:flex;
-
-        gap:16px;
-
-        cursor:pointer;
-
-        text-align:left;
-
-        transition:
-            .18s transform,
-            .18s background;
-
-    }
-
-    .category-card:hover{
-
-        transform:
-            translateX(8px);
-
-        background:#262626;
-
-    }
-
-    .category-card:active{
-
-        transform:
-            scale(.98);
-
-    }
-
-    .cat-icon{
-
-        display:flex;
-
-        align-items:center;
-
-        color:var(--accent);
-
-    }
-
-    .cat-content{
-
-        flex:1;
-
-    }
-
-    .cat-top{
-
-        display:flex;
-
-        justify-content:space-between;
-
-        align-items:center;
-
-        margin-bottom:12px;
-
-    }
-
-    .cat-title{
-
-        font-size:22px;
-
-        font-weight:bold;
-
-    }
-
-    .cat-counter{
-
-        color:var(--accent);
-
-        font-size:14px;
-
-    }
-
-    /* ================= */
-
-    .progress-wrap{
-
-        height:10px;
-
-        background:#2a2a2a;
-
-    }
-
-    .progress{
-
-        height:100%;
-
-        background:var(--accent);
-
-        transition:.25s;
-
-    }
-
-    /* ================= */
-
-    .topbar{
-
-        display:flex;
-
-        align-items:center;
-
-        gap:14px;
-
-        margin-bottom:20px;
-
-    }
-
-    .back-btn{
-
-        width:52px;
-
-        height:52px;
-
-        border:none;
-
-        background:var(--accent);
-
-        color:var(--accent-text);
-
-        display:flex;
-
-        align-items:center;
-
-        justify-content:center;
-
-        cursor:pointer;
-
-        transition:.15s;
-
-    }
-
-    .back-btn:hover{
-
-        filter:brightness(1.1);
-
-    }
-
-    .back-btn:active{
-
-        transform:scale(.95);
-
-    }
-
-    .title{
-
-        font-size:28px;
-
-        font-weight:bold;
-
-        color:var(--accent);
-
-    }
-
-    /* ================= */
-
-    .level-grid{
-
-        display:grid;
-
-        grid-template-columns:
-            repeat(
-                auto-fill,
-                minmax(120px,1fr)
-            );
-
-        gap:14px;
-
-    }
-
-    .level-card{
-
-        border:none;
-
-        background:#1c1c1c;
-
-        border-top:5px solid
-        var(--accent);
-
-        color:white;
-
-        min-height:120px;
-
-        padding:14px;
-
-        display:flex;
-
-        flex-direction:column;
-
-        justify-content:space-between;
-
-        cursor:pointer;
-
-        transition:
-            .18s transform,
-            .18s background;
-
-    }
-
-    .level-card:hover{
-
-        transform:
-            translateY(-4px);
-
-        background:#262626;
-
-    }
-
-    .level-card:active{
-
-        transform:
-            scale(.97);
-
-    }
-
-    .lvl-top{
-
-        display:flex;
-
-        justify-content:
-        space-between;
-
-    }
-
-    .lvl-id{
-
-        font-size:34px;
-
-        font-weight:bold;
-
-        color:var(--accent);
-
-    }
-
-    .score-box{
-
-        display:flex;
-
-        align-items:center;
-
-        gap:6px;
-
-        color:var(--accent);
-
-        font-weight:bold;
-
-    }
-
-    .lock{
-
-        color:#aaa;
-
-    }
-
-    /* ================= */
-
-    .locked{
-
-        opacity:.45;
-
-        filter:grayscale(1);
-
-        cursor:not-allowed;
-
-    }
-
-    .locked:hover{
-
-        transform:none;
-
-        background:#1c1c1c;
-
-    }
-
-    /* ================= */
-
-    .material-icons{
-
-        user-select:none;
-
-    }
-
-</style>

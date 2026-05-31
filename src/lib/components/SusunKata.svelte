@@ -1,4 +1,3 @@
-
 <script>
 
     let {
@@ -72,18 +71,18 @@
 
 </script>
 
-<div class="root">
+<div class="root min-h-screen bg-dark text-white p-4">
 
-    <div class="topbar">
+    <div class="topbar flex gap-3 items-center">
 
         <button
-            class="back"
+            class="back w-12 h-12 border-none bg-accent text-accent-content cursor-pointer"
             onclick={onExit}
         >
             ←
         </button>
 
-        <div class="title">
+        <div class="title text-accent text-3xl font-bold">
 
             {judul}
 
@@ -93,22 +92,22 @@
 
     {#if item}
 
-        <div class="progress">
+        <div class="progress mt-5 progress-bar">
 
             <div
-                class="fill"
+                class="fill progress-fill"
                 style:width={`${progress}%`}
             ></div>
 
         </div>
 
-        <div class="clue">
+        <div class="clue mt-8 text-xl text-center">
 
             {item.clue}
 
         </div>
 
-        <div class="letters">
+        <div class="letters mt-7 bg-card p-5 text-center text-4xl font-bold tracking-widest text-accent">
 
             {shuffled}
 
@@ -118,7 +117,7 @@
 
             bind:value={answer}
 
-            class="input"
+            class="input w-full mt-5 p-4 bg-input border-none text-white"
 
             placeholder="Jawaban..."
 
@@ -130,7 +129,7 @@
         />
 
         <button
-            class="submit"
+            class="submit w-full mt-3 p-4 border-none bg-accent text-accent-content font-bold cursor-pointer"
             onclick={submit}
         >
 
@@ -141,129 +140,3 @@
     {/if}
 
 </div>
-
-<style>
-
-.root{
-
-    min-height:100vh;
-
-    background:#111;
-
-    color:white;
-
-    padding:16px;
-
-    box-sizing:border-box;
-}
-
-.topbar{
-
-    display:flex;
-
-    gap:12px;
-
-    align-items:center;
-}
-
-.back{
-
-    width:50px;
-
-    height:50px;
-
-    border:none;
-
-    background:var(--accent);
-
-    color:var(--accent-text);
-}
-
-.title{
-
-    color:var(--accent);
-
-    font-size:28px;
-
-    font-weight:bold;
-}
-
-.progress{
-
-    margin-top:20px;
-
-    height:10px;
-
-    background:#222;
-}
-
-.fill{
-
-    height:100%;
-
-    background:var(--accent);
-}
-
-.clue{
-
-    margin-top:30px;
-
-    font-size:22px;
-
-    text-align:center;
-}
-
-.letters{
-
-    margin-top:25px;
-
-    background:#1b1b1b;
-
-    padding:20px;
-
-    text-align:center;
-
-    font-size:34px;
-
-    font-weight:bold;
-
-    letter-spacing:8px;
-
-    color:var(--accent);
-}
-
-.input{
-
-    width:100%;
-
-    margin-top:20px;
-
-    padding:16px;
-
-    background:#222;
-
-    border:none;
-
-    color:white;
-
-    box-sizing:border-box;
-}
-
-.submit{
-
-    width:100%;
-
-    margin-top:12px;
-
-    padding:16px;
-
-    border:none;
-
-    background:var(--accent);
-
-    color:var(--accent-text);
-
-    font-weight:bold;
-}
-
-</style>

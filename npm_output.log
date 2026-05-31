@@ -1,0 +1,28 @@
+
+> orpostts@0.0.1 dev
+> vite dev
+
+3:53:01 AM [vite] (client) Forced re-optimization of dependencies
+
+  VITE v7.3.3  ready in 1535 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+3:54:21 AM [vite-plugin-svelte] src/routes/+page.svelte:121:8 `<svelte:component>` is deprecated in runes mode — components are dynamic by default
+https://svelte.dev/e/svelte_component_deprecated
+3:54:21 AM [vite-plugin-svelte] src/lib/components/QuizABCD.svelte:27:29 This reference only captures the initial value of `life`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+3:54:21 AM [vite-plugin-svelte] src/lib/components/TarikKata.svelte:23:8 This reference only captures the initial value of `level`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+3:54:21 AM [vite-plugin-svelte] src/lib/components/BenarSalah.svelte:19:29 This reference only captures the initial value of `life`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+3:54:22 AM [vite-plugin-svelte] src/routes/+page.svelte:121:8 `<svelte:component>` is deprecated in runes mode — components are dynamic by default
+https://svelte.dev/e/svelte_component_deprecated
+3:54:22 AM [vite-plugin-svelte] src/lib/components/QuizABCD.svelte:27:29 This reference only captures the initial value of `life`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+3:54:22 AM [vite-plugin-svelte] src/lib/components/BenarSalah.svelte:19:29 This reference only captures the initial value of `life`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+3:54:22 AM [vite-plugin-svelte] src/lib/components/TarikKata.svelte:23:8 This reference only captures the initial value of `level`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally
+3:58:50 AM [vite] (client) hmr update /src/lib/styles/app.css
+3:58:50 AM [vite] (ssr) page reload src/lib/styles/app.css

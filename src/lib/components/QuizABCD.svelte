@@ -180,7 +180,7 @@
 
 {#if !level}
 
-<div class="empty">
+<div class="empty min-h-screen flex items-center justify-center bg-dark text-white">
 
     LEVEL TIDAK DITEMUKAN
 
@@ -188,7 +188,7 @@
 
 {:else if total === 0}
 
-<div class="empty">
+<div class="empty min-h-screen flex items-center justify-center bg-dark text-white">
 
     LEVEL INI BELUM PUNYA SOAL
 
@@ -196,26 +196,26 @@
 
 {:else}
 
-<div class="root">
+<div class="root min-h-screen bg-dark text-white p-4">
 
     <!-- TOP -->
 
-    <div class="topbar">
+    <div class="topbar flex items-center gap-3">
 
         <button
-            class="back"
+            class="back border-none bg-accent text-accent-content w-12 h-12 cursor-pointer"
             onclick={onExit}
         >
             ←
         </button>
 
-        <div class="title">
+        <div class="title flex-1 text-2xl font-bold text-accent">
 
             {judul}
 
         </div>
 
-        <div class="life">
+        <div class="life font-bold">
 
             ❤️ {currentLife}
 
@@ -225,7 +225,7 @@
 
     <!-- SCORE -->
 
-    <div class="score">
+    <div class="score mt-3">
 
         Skor:
         {score.toFixed(1)}
@@ -234,16 +234,16 @@
 
     <!-- PROGRESS -->
 
-    <div class="progress">
+    <div class="progress mt-3 progress-bar">
 
         <div
-            class="fill"
+            class="fill progress-fill"
             style:width={`${progress}%`}
         ></div>
 
     </div>
 
-    <div class="counter">
+    <div class="counter mt-2 text-gray">
 
         Soal
         {current + 1}
@@ -254,7 +254,7 @@
 
     <!-- QUESTION -->
 
-    <div class="question">
+    <div class="question mt-5 p-4 bg-card border-l-5 text-2xl font-bold">
 
         {soal.q}
 
@@ -262,7 +262,7 @@
 
     <!-- OPTIONS -->
 
-    <div class="options">
+    <div class="options mt-5 flex flex-col gap-10">
 
         {#each soal.a as answer, i}
 
@@ -270,9 +270,17 @@
 
                 class="
                     option
-                    {selected === i && i === soal.t ? 'correct' : ''}
-                    {selected === i && i !== soal.t ? 'wrong' : ''}
-                    {removed[i] ? 'removed' : ''}
+                    border-none
+                    bg-input
+                    text-white
+                    flex
+                    gap-14
+                    p-4
+                    cursor-pointer
+                    text-left
+                    {selected === i && i === soal.t ? 'bg-success' : ''}
+                    {selected === i && i !== soal.t ? 'bg-danger' : ''}
+                    {removed[i] ? 'opacity-25 pointer-events-none' : ''}
                 "
 
                 onclick={() =>
@@ -281,7 +289,7 @@
 
             >
 
-                <div class="letter">
+                <div class="letter w-10 h-10 bg-accent text-accent-content flex items-center justify-center font-bold">
 
                     {
                         ["A","B","C","D"][i]
@@ -289,7 +297,7 @@
 
                 </div>
 
-                <div class="text">
+                <div class="text flex-1 flex items-center">
 
                     {answer}
 
@@ -304,215 +312,3 @@
 </div>
 
 {/if}
-
-<style>
-
-.root{
-
-    min-height:100vh;
-
-    background:#111;
-
-    color:white;
-
-    padding:16px;
-
-    box-sizing:border-box;
-
-    font-family:sans-serif;
-
-}
-
-.topbar{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-}
-
-.back{
-
-    border:none;
-
-    background:var(--accent);
-
-    color:var(--accent-text);
-
-    width:48px;
-
-    height:48px;
-
-    cursor:pointer;
-
-}
-
-.title{
-
-    flex:1;
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    color:var(--accent);
-
-}
-
-.life{
-
-    font-weight:bold;
-
-}
-
-.score{
-
-    margin-top:12px;
-
-}
-
-.progress{
-
-    margin-top:12px;
-
-    height:10px;
-
-    background:#222;
-
-}
-
-.fill{
-
-    height:100%;
-
-    background:var(--accent);
-
-    transition:0.2s;
-
-}
-
-.counter{
-
-    margin-top:8px;
-
-    color:#999;
-
-}
-
-.question{
-
-    margin-top:20px;
-
-    padding:18px;
-
-    background:#1b1b1b;
-
-    border-left:5px solid var(--accent);
-
-    font-size:24px;
-
-    font-weight:bold;
-
-}
-
-.options{
-
-    margin-top:20px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:10px;
-
-}
-
-.option{
-
-    border:none;
-
-    background:#222;
-
-    color:white;
-
-    display:flex;
-
-    gap:14px;
-
-    padding:14px;
-
-    cursor:pointer;
-
-    text-align:left;
-
-}
-
-.letter{
-
-    width:40px;
-
-    height:40px;
-
-    background:var(--accent);
-
-    color:var(--accent-text);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-weight:bold;
-
-}
-
-.text{
-
-    flex:1;
-
-    display:flex;
-
-    align-items:center;
-
-}
-
-.correct{
-
-    background:#1f6d43;
-}
-
-.wrong{
-
-    background:#8a2d2d;
-}
-
-.removed{
-
-    opacity:.25;
-
-    pointer-events:none;
-
-}
-
-.empty{
-
-    min-height:100vh;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:#111;
-
-    color:white;
-
-    font-family:sans-serif;
-
-}
-
-</style>

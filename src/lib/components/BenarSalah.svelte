@@ -88,7 +88,7 @@
 
 {#if !level}
 
-<div class="empty">
+<div class="empty min-h-screen flex justify-center items-center bg-dark text-white">
 
     LEVEL TIDAK DITEMUKAN
 
@@ -96,18 +96,18 @@
 
 {:else}
 
-<div class="root">
+<div class="root min-h-screen bg-dark text-white p-4">
 
-    <div class="topbar">
+    <div class="topbar flex gap-3 items-center">
 
         <button
-            class="back"
+            class="back w-12 h-12 border-none bg-accent text-accent-content cursor-pointer"
             onclick={onExit}
         >
             ←
         </button>
 
-        <div class="title">
+        <div class="title flex-1 text-accent text-2xl font-bold">
 
             {judul}
 
@@ -121,32 +121,32 @@
 
     </div>
 
-    <div class="score">
+    <div class="score mt-4">
 
         Skor:
         {score.toFixed(1)}
 
     </div>
 
-    <div class="progress">
+    <div class="progress mt-3 progress-bar">
 
         <div
-            class="fill"
+            class="fill progress-fill"
             style:width={`${progress}%`}
         ></div>
 
     </div>
 
-    <div class="question">
+    <div class="question mt-6 p-5 bg-card border-l-5 text-2xl">
 
         {soal?.q}
 
     </div>
 
-    <div class="buttons">
+    <div class="buttons mt-6 grid grid-cols-2 gap-3">
 
         <button
-            class="btn benar"
+            class="btn border-none p-5 text-white font-bold cursor-pointer bg-success"
             onclick={() =>
                 answer(true)
             }
@@ -155,7 +155,7 @@
         </button>
 
         <button
-            class="btn salah"
+            class="btn border-none p-5 text-white font-bold cursor-pointer bg-danger"
             onclick={() =>
                 answer(false)
             }
@@ -168,151 +168,3 @@
 </div>
 
 {/if}
-
-<style>
-
-.root{
-
-    min-height:100vh;
-
-    background:#111;
-
-    color:white;
-
-    padding:16px;
-
-    box-sizing:border-box;
-
-}
-
-.topbar{
-
-    display:flex;
-
-    gap:12px;
-
-    align-items:center;
-
-}
-
-.back{
-
-    width:48px;
-
-    height:48px;
-
-    border:none;
-
-    background:var(--accent);
-
-    color:var(--accent-text);
-
-}
-
-.title{
-
-    flex:1;
-
-    color:var(--accent);
-
-    font-size:24px;
-
-    font-weight:bold;
-
-}
-
-.score{
-
-    margin-top:16px;
-
-}
-
-.progress{
-
-    margin-top:12px;
-
-    height:10px;
-
-    background:#222;
-
-}
-
-.fill{
-
-    height:100%;
-
-    background:var(--accent);
-
-}
-
-.question{
-
-    margin-top:24px;
-
-    padding:20px;
-
-    background:#1b1b1b;
-
-    border-left:5px solid
-    var(--accent);
-
-    font-size:24px;
-
-}
-
-.buttons{
-
-    margin-top:24px;
-
-    display:grid;
-
-    grid-template-columns:
-    1fr 1fr;
-
-    gap:12px;
-
-}
-
-.btn{
-
-    border:none;
-
-    padding:20px;
-
-    color:white;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-}
-
-.benar{
-
-    background:#1f6d43;
-
-}
-
-.salah{
-
-    background:#8a2d2d;
-
-}
-
-.empty{
-
-    min-height:100vh;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    background:#111;
-
-    color:white;
-
-}
-
-</style>

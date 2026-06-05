@@ -178,7 +178,7 @@
 
         <div class="subtitle mt-1 text-muted text-sm">
 
-            Version 0.1.0 Beta
+            Version 0.2.0 Beta
 
         </div>
 
@@ -212,6 +212,20 @@
         {/each}
 
     </div>
+<div class="col-span-2 mt-4">
+  <button
+    class="w-full bg-card p-5 rounded-xl border-2 border-dashed border-accent flex items-center gap-4 border-none transition-all hover:bg-hover active:scale-97"
+    onclick={() => openGame("yourquiz")}
+  >
+    <div class="text-accent">
+      <span class="material-icons">assignment_add</span>
+    </div>
+    <div class="text-left">
+      <div class="font-bold text-lg">Your Quiz</div>
+      <div class="text-sm text-muted">Paste quiz yang kamu generate</div>
+    </div>
+  </button>
+</div>
 
     <div class="bottom mt-5 grid grid-cols-2 gap-12">
 

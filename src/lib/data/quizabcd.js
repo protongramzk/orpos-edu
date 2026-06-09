@@ -2,6 +2,7 @@
 import { QuizNegara } from './abcd/quiz-negara';
 import { QuizTeknologi } from './abcd/quiz-teknologi';
 import { QuizSains } from './abcd/quiz-sains';
+import {QuizUUD} from './abcd/QuizUUD';
 import { NegaraIbuKota, generateNegaraQuestion } from './abcd/data-negara-ibukota';
 
 export const QuizABCDDB = [
@@ -38,7 +39,8 @@ export const QuizABCDDB = [
     },
     QuizNegara,
     QuizTeknologi,
-    QuizSains
+    QuizSains,
+    QuizUUD
 ];
 
 export { NegaraIbuKota, generateNegaraQuestion };
